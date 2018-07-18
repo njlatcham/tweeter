@@ -28,21 +28,24 @@
         <nav id="nav-bar">
             <img class="logo" src="/images/bird.png" alt="bird">
             <span class="header">Tweeter</span>
+            <button class="compose">Compose</button>
         </nav>
 
         <!-- Page-specific (main) content here -->
         <main class="container">
 
+            <!-- New Tweet form submission -->
             <section class="newTweet">
                 <h2 class="newTweet-title">Compose Tweet</h2>
                 <div class="line"></div>
-                <form action="POST" method="/tweets">
+                <form id="submit">
                     <textarea id="newTweet" name="text" cols="30" rows="3" placeholder="What are you thinking about?"></textarea>
                     <button>Tweet</button>
                     <span class="counter">140</span>
                 </form>
             </section>
 
+            <!-- Hardcoded tweet for styling -->
             <section>
                 <article class="tweets">
                     <header class="tweets-header">
@@ -68,7 +71,7 @@
                 </article>
             </section>
 
-            <!-- Input Tweets Here! -->
+            <!-- Dynamically adds tweets to the page using a hardcoded database -->
             <section id="tweetsContainer"></section>
         </main>
 

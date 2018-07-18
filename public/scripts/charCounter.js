@@ -10,6 +10,7 @@ $(document).ready(function() {
 			counter.css('color', '#ff0000')
 		} else {
 			counter.text(charLeft)
+			counter.css('color', '')
 		}
 	})
 });

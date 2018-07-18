@@ -1,82 +1,46 @@
-/*
- * Client-side JS logic goes here
- * jQuery is already loaded
- * Reminder: Use (and do all your DOM work in) jQuery's document ready function
- */
-
-//Tweet Database
-const Data = [
-	{
-	  	"user": {
-		    "name": "Newton",
-		    "handle": "@SirIsaac",
-		    "avatars": {
-		      	"small":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_50.png",
-		      	"regular": "https://vanillicon.com/788e533873e80d2002fa14e1412b4188.png",
-		     	"large":   "https://vanillicon.com/788e533873e80d2002fa14e1412b4188_200.png"
-		    }
-	  	},
-	  	"content": {
-		    "text": "If I have seen further it is by standing on the shoulders of giants"
-	  	},
-	  	"created_at": 1461116232227
-	},
-	{
-	    "user": {
-	      "name": "Descartes",
-	      "avatars": {
-	        "small":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_50.png",
-	        "regular": "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc.png",
-	        "large":   "https://vanillicon.com/7b89b0d8280b93e2ba68841436c0bebc_200.png"
-	      },
-	      "handle": "@rd" },
-	    "content": {
-	      "text": "Je pense , donc je suis"
-	    },
-	    "created_at": 1461113959088
-	},
-	{
-	    "user": {
-	      "name": "Johann von Goethe",
-	      "avatars": {
-	        "small":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_50.png",
-	        "regular": "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1.png",
-	        "large":   "https://vanillicon.com/d55cf8e18b47d4baaf60c006a0de39e1_200.png"
-	      },
-	      "handle": "@johann49"
-	    },
-	    "content": {
-	      "text": "Es ist nichts schrecklicher als eine tätige Unwissenheit."
-	    },
-	    "created_at": 1461113796368
-	}
-]
-
+// Wait until the document has loaded all the HTML and CSS and then begin running the JS
 $(document).ready(function() {
+
+	// Gets the array containing the database of tweets and pushes it into renderTweets()
+	function loadTweets() {
+		$.ajax('/tweets', {method: 'GET'})
+		.then(function (dbArray) {
+			renderTweets(dbArray)
+		})
+	}
+
+	// Iterates through database and for each item, prepend it into the HTML document
 	function renderTweets(tweets) {
 		for (let item of tweets) {
 			const tweetElement = createTweetElement(item)
-			$('#tweetsContainer').append(tweetElement)
+			$('#tweetsContainer').prepend(tweetElement)
 		}
+	}
+
+	// Using the escape function to protect my user inputs from being able to change what goes on in the site
+	function escape(str) {
+	  	var div = document.createElement('div')
+	  	div.appendChild(document.createTextNode(str))
+	  	return div.innerHTML
 	}
 
 	function createTweetElement(tweet) {
 		// Takes template from index.html and data from the tweetData base to create a dynamic tweet
 	  	let tweetElement = `<article class="tweets">
 			<header class="tweets-header">
-				<img class="tweets-header_img" src="${tweet.user.avatars.small}" alt="Profile Picture">
+				<img class="tweets-header_img" src="${escape(tweet.user.avatars.small)}" alt="Profile Picture">
 				<div class="tweets-header_title">
-					<div class="tweets-header_title__name">${tweet.user.name}</div>
-                    <div class="tweets-header_title__username">${tweet.user.handle}</div>
+					<div class="tweets-header_title__name">${escape(tweet.user.name)}</div>
+                    <div class="tweets-header_title__username">${escape(tweet.user.handle)}</div>
 				</div>
 			</header>
 
 			<div class="tweets-text">
-                <p class="tweets-text_tweet">${tweet.content.text}</p>
+                <p class="tweets-text_tweet">${escape(tweet.content.text)}</p>
             </div>
 
             <footer class="tweets-footer">
-                <p class="tweets-footer_time">${tweet.created_at}</p>
+                <p class="tweets-footer_time">${escape(tweet.created_at)}</p>
                 <div class="tweets-footer_images">
                     <img class="tweets-footer_images__flag" src="/images/flag-solid.svg" alt="Flag">
                     <img class="tweets-footer_images__retweet" src="/images/retweet-solid.svg" alt="Retweet">
@@ -86,7 +50,34 @@ $(document).ready(function() {
 	  	</article>`
 	  	return $(tweetElement);
 	}
-	renderTweets(Data)
+
+	// When the user submits their tweet, send it to the server and pull 
+	//out the content as well as the name, handle, date and avatar
+	$('#submit').submit(function(ev) {
+		// Stops the default event from being called
+		ev.preventDefault()
+
+		const $tweetText = $(this).serialize()
+
+		// If tweet is empty, give the user an alert and do not submit
+		if ($('textarea').val() === '') {
+			window.alert('Tweet cannot be empty')
+		// If tweet is over 140 characters, give the user an alert and do not submit
+		} else if ($('textarea').val().length > 140) {
+			window.alert('Tweet must be less than 140 characters')
+		// If tweet meets all requirements, send contents to '/tweets', clear the section with 
+		// id='tweetsContainer' and reload all tweets
+		} else {
+			$.post('/tweets', $tweetText, function(err, response) {
+				$('#tweetsContainer').empty()
+				$('textarea').val('')
+				loadTweets()
+			})
+		}
+	})
+
+	// Initially loads tweets until it is cleared when the submit button is clicked
+	loadTweets()
 })
 
 
