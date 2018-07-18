@@ -1,6 +1,9 @@
 // Wait until the document has loaded all the HTML and CSS and then begin running the JS
 $(document).ready(function() {
 
+	// Hides the new tweet form until the compose button is clicked
+	$('.newTweet').slideToggle(0)
+
 	// Gets the array containing the database of tweets and pushes it into renderTweets()
 	function loadTweets() {
 		$.ajax('/tweets', {method: 'GET'})
@@ -11,6 +14,7 @@ $(document).ready(function() {
 
 	// Iterates through database and for each item, prepend it into the HTML document
 	function renderTweets(tweets) {
+		$('#tweetsContainer').empty()
 		for (let item of tweets) {
 			const tweetElement = createTweetElement(item)
 			$('#tweetsContainer').prepend(tweetElement)
@@ -69,7 +73,6 @@ $(document).ready(function() {
 		// id='tweetsContainer' and reload all tweets
 		} else {
 			$.post('/tweets', $tweetText, function(err, response) {
-				$('#tweetsContainer').empty()
 				$('textarea').val('')
 				loadTweets()
 			})
@@ -78,6 +81,14 @@ $(document).ready(function() {
 
 	// Initially loads tweets until it is cleared when the submit button is clicked
 	loadTweets()
+
+	// Creating button to show and hide the new tweet form, as well as focusing on the textarea
+	// when clicked
+	$('.compose').click(function(ev) {
+		ev.preventDefault()
+		$('.newTweet').slideToggle(100)
+		$('#newTweet').focus()
+	})
 })
 
 

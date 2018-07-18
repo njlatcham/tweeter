@@ -23,5 +23,19 @@
 }
 
 #nav-bar .compose {
-	
+	align-items: center;
+	background-color: white;
+	border: 1px solid black;
+	border-radius: 5px;
+	color: #00A087;
+	display: flex;
+	float: right;
+	font-size: 1.3rem;
+	margin: 16px 0;
+	opacity: 0.8;
+	padding: 10px;
+}
+
+#nav-bar .compose:hover{
+	opacity: 1;
 }
