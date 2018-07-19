@@ -3,6 +3,8 @@ $(document).ready(function() {
 
 	// Hides the new tweet form until the compose button is clicked
 	$('.newTweet').slideToggle(0)
+	$('.emptyError').toggle(false)
+	$('.charError').toggle(false)
 
 	// Gets the array containing the database of tweets and pushes it into renderTweets()
 	function loadTweets() {
@@ -65,15 +67,18 @@ $(document).ready(function() {
 
 		// If tweet is empty, give the user an alert and do not submit
 		if ($('textarea').val() === '') {
-			window.alert('Tweet cannot be empty')
+			console.log('hello')
+			$('.emptyError').toggle(true)
 		// If tweet is over 140 characters, give the user an alert and do not submit
 		} else if ($('textarea').val().length > 140) {
-			window.alert('Tweet must be less than 140 characters')
+			$('.charError').toggle(true)
 		// If tweet meets all requirements, send contents to '/tweets', clear the section with 
 		// id='tweetsContainer' and reload all tweets
 		} else {
 			$.post('/tweets', $tweetText, function(err, response) {
 				$('textarea').val('')
+				$('.emptyError').toggle(false)
+				$('.charError').toggle(false)
 				loadTweets()
 			})
 		}
