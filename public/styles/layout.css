@@ -1,12 +1,8 @@
-/*
- * http://www.paulirish.com/2012/box-sizing-border-box-ftw/
- * https://css-tricks.com/international-box-sizing-awareness-day/
- * Do not modify these two selectors, please
- */
 html {
   	box-sizing: border-box;
   	font-family: 'Roboto Condensed', sans-serif;
 }
+
 *, *:before, *:after {
   	box-sizing: inherit;
 }
@@ -59,6 +55,7 @@ body {
 
 .emptyError {
 	color: #ff0000;
+	display: none;
 	font-size: 1.2rem;
 	text-align: center;
 }
@@ -143,30 +140,16 @@ body {
 
 .tweets-footer_images {
 	align-items: center;
+	color: #00A087;
 	display: flex;
 	visibility: hidden
 }
 
-.tweets-footer_images__flag {
-	color: #00A087;
-	height: 25px;
+.fas {
 	padding-right: 5px;
-	width: 25px;
 }
 
-.tweets-footer_images__retweet {
-	color: #00A087;
-	height: 25px;
-	padding-right: 5px;
-	width: 25px;
-}
 
-.tweets-footer_images__heart {
-	color: #00A087;
-	height: 25px;
-	padding-right: 5px;
-	width: 25px;
-}
 
 
 

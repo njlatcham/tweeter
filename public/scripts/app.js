@@ -48,13 +48,13 @@ $(document).ready(function() {
             <footer class="tweets-footer">
                 <p class="tweets-footer_time">${escape(tweet.created_at)}</p>
                 <div class="tweets-footer_images">
-                    <img class="tweets-footer_images__flag" src="/images/flag-solid.svg" alt="Flag">
-                    <img class="tweets-footer_images__retweet" src="/images/retweet-solid.svg" alt="Retweet">
-                    <img class="tweets-footer_images__heart" src="/images/heart-solid.svg" alt="Heart">
+                    <i class="fas fa-flag"></i>
+                    <i class="fas fa-retweet"></i>
+                    <i class="fas fa-heart"></i>
                 </div>
             </footer>
 	  	</article>`
-	  	return $(tweetElement);
+	  	return $(tweetElement)
 	}
 
 	// When the user submits their tweet, send it to the server and pull 
@@ -77,6 +77,7 @@ $(document).ready(function() {
 		} else {
 			$.post('/tweets', $tweetText, function(err, response) {
 				$('textarea').val('')
+				$('.counter').text('140')
 				$('.emptyError').toggle(false)
 				$('.charError').toggle(false)
 				loadTweets()
