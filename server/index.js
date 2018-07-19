@@ -6,6 +6,7 @@ const express       = require("express")
 const bodyParser    = require("body-parser")
 const app           = express()
 
+// Requires external DB, MongoDB
 const MongoClient = require("mongodb").MongoClient
 const MONGODB_URI = "mongodb://localhost:27017/tweeter"
 

@@ -14,7 +14,3 @@ $(document).ready(function() {
 		}
 	})
 });
-
-// console.log('Hello There')
-// console.log('General Kenobi! You are a bold one')
-
