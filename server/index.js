@@ -1,16 +1,26 @@
 "use strict"
 
 // Basic express setup:
-const PORT          = 8080
+const PORT          = 3000
 const express       = require("express")
 const bodyParser    = require("body-parser")
 const app           = express()
+var sassMiddleware = require('node-sass-middleware')
 
 // Requires external DB, MongoDB
 const MongoClient = require("mongodb").MongoClient
 const MONGODB_URI = "mongodb://localhost:27017/tweeter"
 
+const srcPath = __dirname + '/../sass'
+const destPath = __dirname + '/../public/styles'
+
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use('/styles', sassMiddleware({
+    src: srcPath,
+    dest: destPath,
+    debug: true,
+    outputStyle: 'compressed',
+}))
 app.use(express.static("public"))
 
 MongoClient.connect(MONGODB_URI, (err, client) => {

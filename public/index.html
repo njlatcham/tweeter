@@ -4,7 +4,7 @@
         <!-- Meta Information -->
         <title>Tweeter - Home Page</title>
 
-        <!-- External CSS -->
+        <!-- Normalize -->
         <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" type="text/css">
 
         <!-- Fonts -->
@@ -12,8 +12,8 @@
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.1/css/all.css" integrity="sha384-O8whS3fhG2OnA5Kas0Y9l3cfpmYjapjI0E4theH4iuMD+pLhbf6JI0jIMfYcK3yZ" crossorigin="anonymous">
 
         <!-- App CSS -->
-        <link rel="stylesheet" href="/styles/layout.css" type="text/css">
-        <link rel="stylesheet" href="/styles/nav.css" type="text/css">
+        <link rel="stylesheet" href="/styles/main.css" type="text/css">
+        <!-- <link rel="stylesheet" href="/styles/nav.css" type="text/css"> -->
 
         <!-- External JS -->
         <script type="text/javascript" src="/vendor/jquery-2.2.3.min.js"></script>
@@ -39,11 +39,13 @@
             <section class="newTweet">
                 <h2 class="newTweet-title">Compose Tweet</h2>
                 <div class="line"></div>
+
                 <form id="submit">
                     <textarea id="newTweet" name="text" cols="30" rows="3" placeholder="What are you thinking about?"></textarea>
                     <button>Tweet</button>
                     <span class="counter">140</span>
                 </form>
+                
                 <p class="emptyError">Your Tweet cannot be empty.</p>
                 <p class="charError">Your Tweet cannot be over 140 characters.</p>
             </section>
@@ -51,6 +53,5 @@
             <!-- Dynamically adds tweets to the page using a hardcoded database -->
             <section id="tweetsContainer"></section>
         </main>
-
     </body>
 </html>
