@@ -4,8 +4,8 @@ Tweeter is a simple, single-page Twitter clone. It allows for the user to post t
 
 ## Final Product
 
-!["Screenshot of Home Page"](https://github.com/njlatcham/TinyApp/blob/master/docs/URLsRegisterPage.png?raw=true)
-!["Screenshot of Compose Tweet Form"](https://github.com/njlatcham/TinyApp/blob/master/docs/URLsHomePage.png?raw=true)
+!["Screenshot of Home Page"](https://github.com/njlatcham/tweeter/blob/master/docs/Screen%20Shot%202018-07-22%20at%2011.20.36%20AM.png?raw=true)
+!["Screenshot of Compose Tweet Form"](https://github.com/njlatcham/tweeter/blob/master/docs/Screen%20Shot%202018-07-22%20at%2011.20.51%20AM.png?raw=true)
 
 ## Getting Started
 
