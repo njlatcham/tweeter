@@ -3,8 +3,6 @@ $(document).ready(function() {
 
 	// Hides the new tweet form until the compose button is clicked
 	$('.newTweet').slideToggle(0)
-	$('.emptyError').toggle(false)
-	$('.charError').toggle(false)
 
 	// Gets the array containing the database of tweets and pushes it into renderTweets()
 	function loadTweets() {
@@ -46,7 +44,7 @@ $(document).ready(function() {
             </div>
 
             <footer class="tweets-footer">
-                <p class="tweets-footer_time">${escape(tweet.created_at)}</p>
+                <p class="tweets-footer_time">${escape(formatDate(tweet.created_at))}</p>
                 <div class="tweets-footer_images">
                     <i class="fas fa-flag"></i>
                     <i class="fas fa-retweet"></i>
@@ -55,6 +53,33 @@ $(document).ready(function() {
             </footer>
 	  	</article>`
 	  	return $(tweetElement)
+	}
+
+	const formatDate = (nanoseconds) => {
+		formattedDate = 'Posted '
+
+		if (nanoseconds > 1000 * 1000 * 1000 * 60 * 60 * 24 * 30 * 365) {
+			formattedDate += Math.round(nanoseconds / 1000 / 1000 / 1000 / 60 / 60 / 24 / 30 / 365)
+			formattedDate += ' years '
+		} else if (nanoseconds > 1000 * 1000 * 1000 * 60 * 60 * 24 * 30) {
+			formattedDate += Math.round(nanoseconds / 1000 / 1000 / 1000 / 60 / 60 / 24 / 30)
+			formattedDate += ' months '
+		} else if (nanoseconds > 1000 * 1000 * 1000 * 60 * 60 * 24) {
+			formattedDate += Math.round(nanoseconds / 1000 / 1000 / 1000 / 60 / 60 / 24)
+			formattedDate += ' days '
+		} else if (nanoseconds > 1000 * 1000 * 1000 * 60 * 60) {
+			formattedDate += Math.round(nanoseconds / 1000 / 1000 / 1000 / 60 / 60)
+			formattedDate += ' hours '
+		} else if (nanoseconds > 1000 * 1000 * 1000 * 60) {
+			formattedDate += Math.round(nanoseconds / 1000 / 1000 / 1000 / 60)
+			formattedDate += ' minutes '
+		} else {
+			formattedDate += nanoseconds
+			formattedDate += ' seconds '
+		}
+
+		formattedDate += 'ago'
+		return formattedDate
 	}
 
 	// When the user submits their tweet, send it to the server and pull 
@@ -67,7 +92,6 @@ $(document).ready(function() {
 
 		// If tweet is empty, give the user an alert and do not submit
 		if ($('textarea').val() === '') {
-			console.log('hello')
 			$('.emptyError').toggle(true)
 		// If tweet is over 140 characters, give the user an alert and do not submit
 		} else if ($('textarea').val().length > 140) {
